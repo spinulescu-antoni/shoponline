@@ -22,7 +22,18 @@ export class ItemService {
 
     return this.httpClient.post(this.apiUrl, body );
   }
-  public update(item: any){
+  public update(item : Item) {
+    // request de tip (update) -> put() modificam tot obiectul, fara id
+    // request de tip (update) -> patch() modificam doar proprietatile pe care le dorim
+    // body: ce trimitem pe server
+    const body = {
+      id: item.id,
+      title : item.title,
+      description : item.description,
+      imageUrl : item.imageUrl,
+      price : item.price
+    };
+    return this.httpClient.put(this.apiUrl, body);
   }
   public delete(id: string){
     return this.httpClient.delete(this.apiUrl + "/" + id);
@@ -40,5 +51,6 @@ export class ItemService {
     // asObservable() = ne permite sa ne abonam la obiectul itemObservable
     return this.itemObservable.asObservable()
   }
+
 
 }

@@ -8,6 +8,7 @@ import {NgIf} from "@angular/common";
 import {AuthService} from "../services/auth.service";
 import {getXHRResponse} from "rxjs/internal/ajax/getXHRResponse";
 import {platformBrowserDynamic} from "@angular/platform-browser-dynamic";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-auth',
@@ -33,7 +34,7 @@ export class AuthComponent {
   authForm?:FormGroup;
   viewType : string = "login";
 
-  constructor(private formBuilder:FormBuilder, private authService : AuthService) {
+  constructor(private formBuilder:FormBuilder, private authService : AuthService, private router: Router) {
     // this.authForm= this.formBuilder.group({  !exemplu de initializare!
     //
     // });
@@ -83,8 +84,10 @@ export class AuthComponent {
       let request = this.authService.login(body);
 
       request.subscribe((response : any) =>{
-        console.log(response);
-      })
+        console.log(response)
+        this.router.navigate(["/", "home"])
+      });
+
     }else {
       alert("Formular invalid");
 
